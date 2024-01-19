@@ -62,14 +62,12 @@ const UserController = {
         { expiresIn: "1h" }
       );
 
-      res
-        .status(200)
-        .json({
-          token,
-          userId: user._id,
-          username: user.username,
-          adminId: user.admin._id,
-        });
+      res.status(200).json({
+        token,
+        userId: user._id,
+        username: user.username,
+        adminId: user.admin._id,
+      });
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Internal Server Error" });
@@ -79,15 +77,24 @@ const UserController = {
   // controllers/adminController.js
   // const User = require('../models/User');
 
-  getUsersForAdmin: async (req, res) => {
-    try {
-      const { adminId } = req.params;
+  // getUsersForAdmin: async (req, res) => {
+  //   try {
+  //     const { adminId } = req.params;
 
-      const users = await User.find({ admin: adminId });
-      res.json(users);
+  //     const users = await User.find({ admin: adminId });
+  //     res.json(users);
+  //   } catch (error) {
+  //     console.error(error);
+  //     res.status(500).json({ error: "Internal Server Error" });
+  //   }
+  // },
+  getClient: async (req, res) => {
+    try {
+      const admins = await User.find({});
+      res.status(200).json(admins);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: "Internal Server Error" });
+      res.status(500).json({ message: "Internal Server Error" });
     }
   },
 };
